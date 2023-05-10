@@ -10,6 +10,9 @@ import authRouter from './routes/authRoutes.js'
 import taskRouter from './routes/taskRoutes.js'
 import connect from './db/connect.js'
 
+import notFoundMiddleware from './middleware/notFoundMiddleware.js'
+import errorHandlerMiddleware from './middleware/errorHandlerMiddleware.js'
+
 // Middleware
 app.use(express.json())
 
@@ -23,10 +26,15 @@ app.get("/", (req,res) =>{
 app.use("/api/v1/auth", authRouter)
 app.use("/api/v1/task", taskRouter)
 
+
+
+app.use(notFoundMiddleware)
+app.use(errorHandlerMiddleware)
+
+const PORT = process.env.PORT || 4000
 const start = async () =>{
     try{
         await connect(process.env.DATABASE)
-        const PORT = process.env.PORT || 4000
         app.listen(PORT, () =>{
             console.log(`Running on ${PORT}`);
         })
