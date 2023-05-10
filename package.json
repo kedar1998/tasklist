@@ -1,0 +1,17 @@
+{
+  "name": "tasklist",
+  "version": "1.0.0",
+  "description": "tasklist app",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "nodemon server.js"
+  },
+  "author": "Kedar Makode",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2",
+    "express-async-errors": "^3.1.1",
+    "mongoose": "^7.1.0"
+  }
+}
