@@ -5,7 +5,12 @@ const taskSchema = mongoose.Schema({
         type: String,
         required: [true, "Please provide task name"],
         minlength: 2,
+    },
+    createdBy: {
+        type: mongoose.Types.ObjectId,
+        ref: 'User',
+        required: [true, 'please provide user']
     }
-})
+}, {timestamps: true})
 
 export default mongoose.model("Task", taskSchema)
