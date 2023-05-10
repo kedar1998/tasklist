@@ -16,8 +16,11 @@ const register = async (req,res,next) =>{
 
     const user = await User.create(req.body)
 
+    const token = user.createJWT()
+
     res.json({
-        user
+        user,
+        token
     })
 }
 
@@ -40,8 +43,13 @@ const login = async (req,res,next) =>{
         return next(createCustomError("Invalid credentials", 401))
     }
 
+    const token = user.createJWT()
+
+    user.password = undefined
+
     res.json({
-        user
+        user,
+        token
     })
 }
 
