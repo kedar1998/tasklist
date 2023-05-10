@@ -1,17 +1,17 @@
 import User from '../models/user.js'
+import { createCustomError } from '../error/customError.js'
 
-
-const register = async (req,res) =>{
+const register = async (req,res,next) =>{
     const {name,email,password} = req.body
 
     if(!name || !email || !password){
-        throw new Error("Please provide all values")
+        return next(createCustomError("Please provide all values", 400))
     }
 
     const userExists = await User.findOne({email})
 
     if(userExists){
-        throw new Error("Email already exists")
+        return next(createCustomError("Email already exists", 400))
     }
 
     const user = await User.create(req.body)
@@ -21,23 +21,23 @@ const register = async (req,res) =>{
     })
 }
 
-const login = async (req,res) =>{
+const login = async (req,res,next) =>{
     const {email, password} = req.body
 
     if(!email || !password){
-        throw new Error("Provide all values")
+        return next(createCustomError("Provide all values", 400))
     }
 
     const user = await User.findOne({email})
 
     if(!user){
-        throw new Error("Invalid credentials")
+        return next(createCustomError("Invalid credentials", 401))
     }
     
     const isPasswordCorrect = await user.comparePassword(password)
     
     if(!isPasswordCorrect){
-        throw new Error("Invalid credentials")
+        return next(createCustomError("Invalid credentials", 401))
     }
 
     res.json({
