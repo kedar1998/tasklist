@@ -13,6 +13,8 @@ import connect from './db/connect.js'
 import notFoundMiddleware from './middleware/notFoundMiddleware.js'
 import errorHandlerMiddleware from './middleware/errorHandlerMiddleware.js'
 
+import authenticate from './middleware/authenticate.js'
+
 // Middleware
 app.use(express.json())
 
@@ -24,7 +26,7 @@ app.get("/", (req,res) =>{
 
 // ROUTES
 app.use("/api/v1/auth", authRouter)
-app.use("/api/v1/task", taskRouter)
+app.use("/api/v1/task", authenticate, taskRouter)
 
 
 
