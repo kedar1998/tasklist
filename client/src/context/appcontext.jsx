@@ -3,7 +3,9 @@ import reducer from './reducer'
 
 
 const initialState = {
-    name: "KKKedar",
+    // AUTHENTICATION
+    user: 'kedar',
+    token: '',
 }
 
 const AppContext = createContext()
