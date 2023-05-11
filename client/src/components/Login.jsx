@@ -1,8 +1,13 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import login from '../assets/login.png'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import { useAppcontext } from '../context/appcontext'
 
 const Login = () => {
+
+    const navigate  = useNavigate()
+
+    const {user, loginUser} = useAppcontext()
 
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
@@ -23,11 +28,21 @@ const Login = () => {
     const handleSubmit = (e) =>{
         e.preventDefault()
         console.log(email, password);
+        const currentUser = {email, password}
+        loginUser(currentUser)
 
         // After completing actions
         setEmail('')
         setPassword('')
     }
+
+    useEffect(() =>{
+        if(user){
+            setTimeout(() =>{
+              navigate("/tasks")
+            }, 1000)
+          }
+    }, [user])
 
 
   return (
